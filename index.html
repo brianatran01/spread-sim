@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -437,10 +437,16 @@ function maxDrawdown(equity) {
 function genSimData() {
   const N = 300;
   const crude = [], natgas = [];
-  let cp = 80, gp = 3;
+  let cp = 80;
+  const hedgeRatio = parseFloat(document.getElementById('pHedge').value) || 8;
+  let spread = 0;
+  const meanReversionSpeed = 0.08;
+  const spreadVol = 0.4;
   for (let i = 0; i < N; i++) {
-    cp += (Math.random()-0.5)*0.6;
-    gp = cp*0.12 + 2.5 + (Math.random()-0.5)*0.2;
+    cp += (Math.random() - 0.5) * 0.8;
+    spread += -meanReversionSpeed * spread + spreadVol * (Math.random() - 0.5) * 2;
+    let gp = (cp - spread) / hedgeRatio;
+    if (gp < 1) gp = 1;
     crude.push(cp);
     natgas.push(gp);
   }
