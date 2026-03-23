@@ -20,30 +20,24 @@
     --mono:      'Share Tech Mono', monospace;
     --sans:      'Barlow', sans-serif;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   body {
     background: var(--bg);
     color: var(--text);
     font-family: var(--sans);
     min-height: 100vh;
     overflow-x: hidden;
+    padding-bottom: 90px;
   }
-
-  /* grid scanlines overlay */
   body::before {
     content: '';
     position: fixed; inset: 0;
-    background-image:
-      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.02) 39px, rgba(255,255,255,0.02) 40px);
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.02) 39px, rgba(255,255,255,0.02) 40px);
     pointer-events: none;
     z-index: 0;
   }
+  .wrapper { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; padding: 28px 20px 40px; }
 
-  .wrapper { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; padding: 28px 20px 60px; }
-
-  /* ── HEADER ── */
   header {
     border-bottom: 1px solid var(--border);
     padding-bottom: 20px;
@@ -52,246 +46,65 @@
     align-items: flex-end;
     gap: 16px;
   }
-  .header-badge {
-    background: var(--green);
-    color: #000;
-    font-family: var(--mono);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    padding: 3px 8px;
-    border-radius: 2px;
-    margin-bottom: 4px;
-    display: inline-block;
-  }
-  header h1 {
-    font-size: 26px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    color: #fff;
-    line-height: 1.1;
-  }
-  header p {
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: 4px;
-    font-family: var(--mono);
-  }
-  .header-right {
-    margin-left: auto;
-    text-align: right;
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    line-height: 1.7;
-  }
+  .header-badge { background: var(--green); color: #000; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; padding: 3px 8px; border-radius: 2px; margin-bottom: 4px; display: inline-block; }
+  header h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; color: #fff; line-height: 1.1; }
+  header p { font-size: 13px; color: var(--muted); margin-top: 4px; font-family: var(--mono); }
+  .header-right { margin-left: auto; text-align: right; font-family: var(--mono); font-size: 11px; color: var(--muted); line-height: 1.7; }
   #live-clock { color: var(--green); }
 
-  /* ── MODE TOGGLE ── */
-  .mode-bar {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px 18px;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  .mode-label {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    margin-right: 6px;
-  }
-  .mode-btn {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    font-family: var(--mono);
-    font-size: 12px;
-    padding: 6px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.06em;
-  }
+  .mode-bar { display: flex; gap: 10px; margin-bottom: 20px; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; align-items: center; flex-wrap: wrap; }
+  .mode-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--muted); margin-right: 6px; }
+  .mode-btn { background: transparent; border: 1px solid var(--border); color: var(--muted); font-family: var(--mono); font-size: 12px; padding: 6px 16px; border-radius: 4px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.06em; }
   .mode-btn:hover { border-color: var(--blue); color: var(--blue); }
-  .mode-btn.active {
-    background: var(--blue);
-    border-color: var(--blue);
-    color: #000;
-    font-weight: 700;
-  }
-  .mode-btn.active.sim { background: var(--green); border-color: var(--green); }
-  .mode-btn.active.live { background: var(--blue); border-color: var(--blue); }
-  .mode-btn.active.hist { background: var(--gold); border-color: var(--gold); }
+  .mode-btn.active.sim  { background: var(--green); border-color: var(--green); color: #000; font-weight: 700; }
+  .mode-btn.active.live { background: var(--blue);  border-color: var(--blue);  color: #000; font-weight: 700; }
+  .mode-btn.active.hist { background: var(--gold);  border-color: var(--gold);  color: #000; font-weight: 700; }
 
-  /* ── PARAMS ROW ── */
-  .params-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  .param-box {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 10px 14px;
-  }
-  .param-box label {
-    display: block;
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
-  .param-box input {
-    width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid var(--border);
-    color: var(--text);
-    font-family: var(--mono);
-    font-size: 16px;
-    padding: 2px 0 4px;
-    outline: none;
-  }
+  .params-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; margin-bottom: 20px; }
+  .param-box { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; }
+  .param-box label { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px; }
+  .param-box input { width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--border); color: var(--text); font-family: var(--mono); font-size: 16px; padding: 2px 0 4px; outline: none; }
   .param-box input:focus { border-bottom-color: var(--green); }
 
-  /* ── RUN BUTTON ── */
-  .run-btn {
-    width: 100%;
-    padding: 14px;
-    background: transparent;
-    border: 1px solid var(--green);
-    color: var(--green);
-    font-family: var(--mono);
-    font-size: 14px;
-    letter-spacing: 0.15em;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.25s;
-    margin-bottom: 24px;
-    position: relative;
-    overflow: hidden;
-  }
-  .run-btn::before {
-    content: '';
-    position: absolute;
-    left: -100%; top: 0; bottom: 0;
-    width: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0,230,118,0.08), transparent);
-    transition: left 0.5s;
-  }
+  .run-btn { width: 100%; padding: 14px; background: transparent; border: 1px solid var(--green); color: var(--green); font-family: var(--mono); font-size: 14px; letter-spacing: 0.15em; border-radius: 6px; cursor: pointer; transition: all 0.25s; margin-bottom: 24px; }
   .run-btn:hover { background: rgba(0,230,118,0.08); box-shadow: 0 0 20px rgba(0,230,118,0.15); }
-  .run-btn:hover::before { left: 100%; }
   .run-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  /* ── STATUS BAR ── */
-  #status {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--muted);
-    margin-bottom: 16px;
-    min-height: 18px;
-    padding-left: 2px;
-  }
+  #status { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-bottom: 16px; min-height: 18px; padding-left: 2px; }
   #status.loading { color: var(--blue); }
   #status.error   { color: var(--red); }
   #status.ok      { color: var(--green); }
 
-  /* ── STATS ROW ── */
-  .stats-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 10px;
-    margin-bottom: 24px;
-  }
-  .stat-card {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 14px 16px;
-    transition: border-color 0.3s;
-  }
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-bottom: 24px; }
+  .stat-card { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; transition: border-color 0.3s; }
   .stat-card.positive { border-color: var(--green-dim); }
   .stat-card.negative { border-color: #7a1a1a; }
-  .stat-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
-  .stat-value {
-    font-family: var(--mono);
-    font-size: 22px;
-    font-weight: 700;
-    color: #fff;
-    line-height: 1;
-  }
+  .stat-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 6px; }
+  .stat-value { font-family: var(--mono); font-size: 22px; font-weight: 700; color: #fff; line-height: 1; }
   .stat-value.positive { color: var(--green); }
   .stat-value.negative { color: var(--red); }
-  .stat-sub {
-    font-family: var(--mono);
-    font-size: 10px;
-    color: var(--muted);
-    margin-top: 4px;
-  }
+  .stat-sub { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 4px; }
 
-  /* ── CHARTS ── */
   .chart-section { margin-bottom: 10px; }
-  .chart-title {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+  .chart-title { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
   .chart-title span { color: var(--text); }
-  canvas {
-    width: 100%;
-    display: block;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-  }
+  canvas.chart { width: 100%; display: block; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; }
   #chartEquity { height: 220px; }
   #chartSpread { height: 160px; margin-top: 12px; }
 
-  /* ── SOURCE BADGE ── */
-  .source-tag {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 10px;
-    padding: 2px 7px;
-    border-radius: 3px;
-    margin-left: 6px;
-    vertical-align: middle;
-  }
+  .source-tag { display: inline-block; font-family: var(--mono); font-size: 10px; padding: 2px 7px; border-radius: 3px; margin-left: 6px; vertical-align: middle; }
   .source-tag.sim  { background: rgba(0,230,118,0.15); color: var(--green); }
   .source-tag.live { background: rgba(41,182,246,0.15); color: var(--blue); }
   .source-tag.hist { background: rgba(255,213,79,0.15); color: var(--gold); }
 
-  .divider {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 24px 0;
-  }
+  /* ── HAMSTER ── */
+  #hamster-stage { position: fixed; bottom: 0; left: 0; right: 0; height: 140px; pointer-events: none; z-index: 9999; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.06); }
+  #hamster-canvas { position: absolute; bottom: 4px; left: -100px; }
+  #confetti-canvas { position: absolute; inset: 0; pointer-events: none; }
 </style>
 </head>
 <body>
 <div class="wrapper">
-
-  <!-- HEADER -->
   <header>
     <div>
       <div class="header-badge">ENERGY DESK</div>
@@ -304,44 +117,24 @@
     </div>
   </header>
 
-  <!-- MODE TOGGLE -->
   <div class="mode-bar">
     <span class="mode-label">DATA SOURCE //</span>
     <button class="mode-btn sim active" onclick="setMode('sim')">⚙ SIMULATION</button>
     <button class="mode-btn live" onclick="setMode('live')">◉ LIVE (5d / 1min)</button>
     <button class="mode-btn hist" onclick="setMode('hist')">◎ HISTORICAL (1yr)</button>
-    <span id="mode-desc" style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--muted);">
-      Synthetic random-walk price paths
-    </span>
+    <span id="mode-desc" style="margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--muted);">Synthetic random-walk price paths</span>
   </div>
 
-  <!-- PARAMS -->
   <div class="params-row">
-    <div class="param-box">
-      <label>LOOKBACK WINDOW</label>
-      <input type="number" id="pLookback" value="40" min="5" max="200">
-    </div>
-    <div class="param-box">
-      <label>ENTRY Z-SCORE</label>
-      <input type="number" id="pEntry" value="2.0" step="0.1" min="0.5" max="5">
-    </div>
-    <div class="param-box">
-      <label>EXIT Z-SCORE</label>
-      <input type="number" id="pExit" value="0.3" step="0.1" min="0" max="2">
-    </div>
-    <div class="param-box">
-      <label>HEDGE RATIO (×NG)</label>
-      <input type="number" id="pHedge" value="8" step="0.5" min="1" max="30">
-    </div>
+    <div class="param-box"><label>LOOKBACK WINDOW</label><input type="number" id="pLookback" value="40" min="5" max="200"></div>
+    <div class="param-box"><label>ENTRY Z-SCORE</label><input type="number" id="pEntry" value="2.0" step="0.1" min="0.5" max="5"></div>
+    <div class="param-box"><label>EXIT Z-SCORE</label><input type="number" id="pExit" value="0.3" step="0.1" min="0" max="2"></div>
+    <div class="param-box"><label>HEDGE RATIO (×NG)</label><input type="number" id="pHedge" value="8" step="0.5" min="1" max="30"></div>
   </div>
 
-  <!-- RUN BUTTON -->
   <button class="run-btn" id="runBtn" onclick="run()">▶ RUN STRATEGY</button>
-
-  <!-- STATUS -->
   <div id="status">AWAITING INPUT —</div>
 
-  <!-- STATS -->
   <div class="stats-row" id="statsRow" style="display:none">
     <div class="stat-card" id="cardPnl">
       <div class="stat-label">TOTAL P&amp;L</div>
@@ -375,22 +168,24 @@
     </div>
   </div>
 
-  <!-- EQUITY CURVE -->
   <div class="chart-section" id="chartSection" style="display:none">
     <div class="chart-title">EQUITY CURVE <span id="sourceTagEquity"></span></div>
-    <canvas id="chartEquity"></canvas>
-
+    <canvas class="chart" id="chartEquity"></canvas>
     <div class="chart-title" style="margin-top:16px">SPREAD Z-SCORE <span style="color:var(--muted);font-size:10px;">— entry/exit bands shown</span></div>
-    <canvas id="chartSpread"></canvas>
+    <canvas class="chart" id="chartSpread"></canvas>
   </div>
+</div>
 
+<!-- HAMSTER STAGE -->
+<div id="hamster-stage">
+  <canvas id="confetti-canvas" width="1400" height="140"></canvas>
+  <canvas id="hamster-canvas" width="90" height="130"></canvas>
 </div>
 
 <script>
-// ── STATE ──────────────────────────────────────────────────────────────
+// ── CONFIG ─────────────────────────────────────────────────────────────
 const API = 'https://spread-sim-api.onrender.com/api/prices';
 let currentMode = 'sim';
-
 const modeDesc = {
   sim:  'Synthetic random-walk price paths',
   live: 'Real futures data — last 5 days, 1-min bars (CL=F / NG=F)',
@@ -399,289 +194,299 @@ const modeDesc = {
 
 // ── CLOCK ──────────────────────────────────────────────────────────────
 setInterval(() => {
-  const now = new Date();
-  document.getElementById('live-clock').textContent =
-    now.toUTCString().split(' ')[4];
+  document.getElementById('live-clock').textContent = new Date().toUTCString().split(' ')[4];
 }, 1000);
 
 // ── MODE ───────────────────────────────────────────────────────────────
 function setMode(m) {
   currentMode = m;
   document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector(`.mode-btn.${m}`).classList.add('active');
+  document.querySelector('.mode-btn.' + m).classList.add('active');
   document.getElementById('mode-desc').textContent = modeDesc[m];
 }
 
-// ── MATH HELPERS ───────────────────────────────────────────────────────
+// ── MATH ───────────────────────────────────────────────────────────────
 function mean(arr) { return arr.reduce((a,b)=>a+b,0)/arr.length; }
-function stdev(arr) {
-  const m = mean(arr);
-  return Math.sqrt(arr.reduce((a,b)=>a+(b-m)**2,0)/arr.length);
-}
-function sharpe(trades) {
-  if (trades.length < 2) return 0;
-  const m = mean(trades), s = stdev(trades);
-  return s === 0 ? 0 : m/s;
-}
-function maxDrawdown(equity) {
-  let peak = -Infinity, dd = 0;
-  for (const v of equity) {
-    if (v > peak) peak = v;
-    const d = peak - v;
-    if (d > dd) dd = d;
-  }
-  return dd;
-}
+function stdev(arr) { var m=mean(arr); return Math.sqrt(arr.reduce((a,b)=>a+(b-m)*(b-m),0)/arr.length); }
+function sharpe(trades) { if(trades.length<2) return 0; var m=mean(trades),s=stdev(trades); return s===0?0:m/s; }
+function maxDrawdown(equity) { var peak=-Infinity,dd=0; equity.forEach(function(v){ if(v>peak)peak=v; var d=peak-v; if(d>dd)dd=d; }); return dd; }
 
-// ── SIMULATION DATA ────────────────────────────────────────────────────
+// ── SIM DATA ───────────────────────────────────────────────────────────
 function genSimData() {
-  const N = 300;
-  const crude = [], natgas = [];
-  let cp = 80;
-  const hedgeRatio = parseFloat(document.getElementById('pHedge').value) || 8;
-  let spread = 0;
-  const meanReversionSpeed = 0.08;
-  const spreadVol = 0.4;
-  for (let i = 0; i < N; i++) {
-    cp += (Math.random() - 0.5) * 0.8;
-    spread += -meanReversionSpeed * spread + spreadVol * (Math.random() - 0.5) * 2;
-    let gp = (cp - spread) / hedgeRatio;
-    if (gp < 1) gp = 1;
-    crude.push(cp);
-    natgas.push(gp);
+  var N=300, crude=[], natgas=[], cp=80;
+  var hedge = parseFloat(document.getElementById('pHedge').value)||8;
+  var spread=0, speed=0.08, vol=0.4;
+  for(var i=0;i<N;i++){
+    cp += (Math.random()-0.5)*0.8;
+    spread += -speed*spread + vol*(Math.random()-0.5)*2;
+    var gp=(cp-spread)/hedge;
+    if(gp<1)gp=1;
+    crude.push(cp); natgas.push(gp);
   }
-  return { crude, natgas, timestamps: null };
+  return {crude:crude, natgas:natgas, timestamps:null};
 }
 
-// ── REAL DATA via local proxy ──────────────────────────────────────────
+// ── FETCH REAL DATA ────────────────────────────────────────────────────
 async function fetchRealData(mode) {
-  setStatus('Fetching from Yahoo Finance...', 'loading');
-  const res = await fetch(`${API}?mode=${mode === 'live' ? 'live' : 'historical'}`);
-  if (!res.ok) throw new Error(`Server error ${res.status}`);
-  const d = await res.json();
-  if (d.error) throw new Error(d.error);
+  setStatus('Fetching from Yahoo Finance...','loading');
+  var res = await fetch(API+'?mode='+(mode==='live'?'live':'historical'));
+  if(!res.ok) throw new Error('Server error '+res.status);
+  var d = await res.json();
+  if(d.error) throw new Error(d.error);
   return d;
 }
 
-// ── STRATEGY ENGINE ────────────────────────────────────────────────────
+// ── STRATEGY ───────────────────────────────────────────────────────────
 function runStrategy(crude, natgas) {
-  const hedge   = parseFloat(document.getElementById('pHedge').value)   || 8;
-  const lookback= parseInt(document.getElementById('pLookback').value)  || 40;
-  const entryZ  = parseFloat(document.getElementById('pEntry').value)   || 2.0;
-  const exitZ   = parseFloat(document.getElementById('pExit').value)    || 0.3;
-
-  const spread = crude.map((c,i) => c - hedge * natgas[i]);
-
-  // Rolling z-score
-  const zscores = [];
-  for (let i = lookback; i < spread.length; i++) {
-    const sl = spread.slice(i-lookback, i);
-    const m  = mean(sl), s = stdev(sl);
-    zscores.push(s === 0 ? 0 : (spread[i]-m)/s);
+  var hedge    = parseFloat(document.getElementById('pHedge').value)||8;
+  var lookback = parseInt(document.getElementById('pLookback').value)||40;
+  var entryZ   = parseFloat(document.getElementById('pEntry').value)||2.0;
+  var exitZ    = parseFloat(document.getElementById('pExit').value)||0.3;
+  var spread   = crude.map(function(c,i){ return c - hedge*natgas[i]; });
+  var zscores  = [];
+  for(var i=lookback;i<spread.length;i++){
+    var sl=spread.slice(i-lookback,i), m=mean(sl), s=stdev(sl);
+    zscores.push(s===0?0:(spread[i]-m)/s);
   }
-
-  let position = 0, entry = 0;
-  const pnl = [], equity = [], zOut = [];
-  let total = 0;
-
-  for (let i = 0; i < zscores.length; i++) {
-    const z = zscores[i];
-    const s = spread[i + lookback];
-    if (position === 0 && z > entryZ)       { position = -1; entry = s; }
-    else if (position === 0 && z < -entryZ) { position =  1; entry = s; }
-    else if (position !== 0 && Math.abs(z) < exitZ) {
-      const trade = (s - entry) * position * -1;
-      total += trade;
-      pnl.push(trade);
-      position = 0;
+  var position=0, entry=0, pnl=[], equity=[], zOut=[], total=0;
+  for(var i=0;i<zscores.length;i++){
+    var z=zscores[i], s=spread[i+lookback];
+    if(position===0&&z>entryZ)       { position=-1; entry=s; }
+    else if(position===0&&z<-entryZ) { position=1;  entry=s; }
+    else if(position!==0&&Math.abs(z)<exitZ){
+      var trade=(s-entry)*position*-1;
+      total+=trade; pnl.push(trade); position=0;
     }
-    equity.push(total);
-    zOut.push(z);
+    equity.push(total); zOut.push(z);
   }
-
-  return { pnl, equity, zscores: zOut, spread: spread.slice(lookback), entryZ, exitZ };
+  return {pnl:pnl, equity:equity, zscores:zOut, spread:spread.slice(lookback), entryZ:entryZ, exitZ:exitZ};
 }
 
 // ── DISPLAY STATS ──────────────────────────────────────────────────────
 function displayStats(result, bars, mode) {
-  const { pnl, equity } = result;
-  const total  = equity[equity.length-1] ?? 0;
-  const wins   = pnl.filter(x=>x>0).length;
-  const winRate= pnl.length ? (wins/pnl.length*100).toFixed(0)+'%' : 'N/A';
-  const sh     = sharpe(pnl);
-  const dd     = maxDrawdown(equity);
+  var pnl=result.pnl, equity=result.equity;
+  var total=equity.length?equity[equity.length-1]:0;
+  var wins=pnl.filter(function(x){return x>0;}).length;
+  var winRate=pnl.length?(wins/pnl.length*100).toFixed(0)+'%':'N/A';
+  var sh=sharpe(pnl), dd=maxDrawdown(equity);
+  var fmt=function(v){ return (v>=0?'+':'')+'\$'+v.toFixed(2); };
 
-  const fmt = v => (v>=0 ? '+' : '') + '$' + v.toFixed(2);
+  var pnlEl=document.getElementById('statPnl');
+  pnlEl.textContent=fmt(total);
+  pnlEl.className='stat-value '+(total>=0?'positive':'negative');
+  document.getElementById('cardPnl').className='stat-card '+(total>=0?'positive':'negative');
+  document.getElementById('statPnlSub').textContent=pnl.length+' trades closed';
+  document.getElementById('statTrades').textContent=pnl.length;
+  document.getElementById('statTradeSub').textContent=wins+' wins / '+(pnl.length-wins)+' losses';
+  document.getElementById('statWin').textContent=winRate;
+  document.getElementById('statSharpe').textContent=isNaN(sh)?'N/A':sh.toFixed(2);
+  document.getElementById('statDD').textContent='-\$'+dd.toFixed(2);
+  document.getElementById('statBars').textContent=bars;
+  document.getElementById('statBarsSub').textContent=mode==='sim'?'simulated minutes':mode==='live'?'1-min bars (5d)':'daily bars (1yr)';
 
-  // P&L card
-  const pnlEl = document.getElementById('statPnl');
-  pnlEl.textContent = fmt(total);
-  pnlEl.className = 'stat-value ' + (total >= 0 ? 'positive' : 'negative');
-  document.getElementById('cardPnl').className = 'stat-card ' + (total >= 0 ? 'positive' : 'negative');
-  document.getElementById('statPnlSub').textContent = `${pnl.length} trades closed`;
+  var tag={sim:'SIMULATED',live:'LIVE DATA',hist:'HISTORICAL'}[mode];
+  document.getElementById('sourceTagEquity').innerHTML='<span class="source-tag '+mode+'">'+tag+'</span>';
+  document.getElementById('statsRow').style.display='grid';
+  document.getElementById('chartSection').style.display='block';
 
-  document.getElementById('statTrades').textContent = pnl.length;
-  document.getElementById('statTradeSub').textContent = `${wins} wins / ${pnl.length-wins} losses`;
-  document.getElementById('statWin').textContent = winRate;
-  document.getElementById('statSharpe').textContent = isNaN(sh) ? 'N/A' : sh.toFixed(2);
-  document.getElementById('statDD').textContent = '-$' + dd.toFixed(2);
-  document.getElementById('statBars').textContent = bars;
-  document.getElementById('statBarsSub').textContent = mode === 'sim' ? 'simulated minutes' :
-    mode === 'live' ? '1-min bars (5d)' : 'daily bars (1yr)';
-
-  const tag = { sim: 'SIMULATED', live: 'LIVE DATA', hist: 'HISTORICAL' }[mode];
-  const cls = mode;
-  document.getElementById('sourceTagEquity').innerHTML =
-    `<span class="source-tag ${cls}">${tag}</span>`;
-
-  document.getElementById('statsRow').style.display = 'grid';
-  document.getElementById('chartSection').style.display = 'block';
+  // trigger hamster
+  if(total>0) { hamsterProfit(); } else { hamsterLoss(); }
 }
 
-// ── DRAW EQUITY CURVE ──────────────────────────────────────────────────
+// ── DRAW EQUITY ────────────────────────────────────────────────────────
 function drawEquity(equity) {
-  const canvas = document.getElementById('chartEquity');
-  canvas.width  = canvas.offsetWidth * devicePixelRatio;
-  canvas.height = 220 * devicePixelRatio;
-  const ctx = canvas.getContext('2d');
-  ctx.scale(devicePixelRatio, devicePixelRatio);
-  const W = canvas.offsetWidth, H = 220;
-  ctx.clearRect(0,0,W,H);
-
-  if (!equity.length) return;
-  const minV = Math.min(...equity), maxV = Math.max(...equity);
-  const pad  = 30;
-  const range= maxV - minV || 1;
-  const toY  = v => H - pad - ((v - minV) / range) * (H - 2*pad);
-  const toX  = i => (i / (equity.length-1)) * (W - 40) + 20;
-
-  // Zero line
-  const zeroY = toY(0);
-  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
-  ctx.lineWidth = 1;
-  ctx.setLineDash([4,4]);
-  ctx.beginPath(); ctx.moveTo(20,zeroY); ctx.lineTo(W-20,zeroY); ctx.stroke();
-  ctx.setLineDash([]);
-
-  // Fill gradient
-  const grad = ctx.createLinearGradient(0,0,0,H);
-  grad.addColorStop(0, 'rgba(0,230,118,0.18)');
-  grad.addColorStop(1, 'rgba(0,230,118,0)');
+  var canvas=document.getElementById('chartEquity');
+  canvas.width=canvas.offsetWidth*devicePixelRatio;
+  canvas.height=220*devicePixelRatio;
+  var ctx=canvas.getContext('2d');
+  ctx.scale(devicePixelRatio,devicePixelRatio);
+  var W=canvas.offsetWidth,H=220,pad=30;
+  if(!equity.length)return;
+  var minV=Math.min.apply(null,equity),maxV=Math.max.apply(null,equity),range=maxV-minV||1;
+  var toY=function(v){return H-pad-((v-minV)/range)*(H-2*pad);};
+  var toX=function(i){return(i/(equity.length-1))*(W-40)+20;};
+  var zeroY=toY(0);
+  ctx.strokeStyle='rgba(255,255,255,0.08)';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+  ctx.beginPath();ctx.moveTo(20,zeroY);ctx.lineTo(W-20,zeroY);ctx.stroke();ctx.setLineDash([]);
+  var grad=ctx.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0,'rgba(0,230,118,0.18)');grad.addColorStop(1,'rgba(0,230,118,0)');
+  ctx.beginPath();ctx.moveTo(toX(0),H);
+  equity.forEach(function(v,i){ctx.lineTo(toX(i),toY(v));});
+  ctx.lineTo(toX(equity.length-1),H);ctx.closePath();ctx.fillStyle=grad;ctx.fill();
+  ctx.strokeStyle='#00e676';ctx.lineWidth=1.5;ctx.lineJoin='round';
   ctx.beginPath();
-  ctx.moveTo(toX(0), H);
-  equity.forEach((v,i) => ctx.lineTo(toX(i), toY(v)));
-  ctx.lineTo(toX(equity.length-1), H);
-  ctx.closePath();
-  ctx.fillStyle = grad;
-  ctx.fill();
-
-  // Line
-  ctx.strokeStyle = '#00e676';
-  ctx.lineWidth   = 1.5;
-  ctx.lineJoin    = 'round';
-  ctx.beginPath();
-  equity.forEach((v,i) => i===0 ? ctx.moveTo(toX(i),toY(v)) : ctx.lineTo(toX(i),toY(v)));
+  equity.forEach(function(v,i){i===0?ctx.moveTo(toX(i),toY(v)):ctx.lineTo(toX(i),toY(v));});
   ctx.stroke();
-
-  // Y-axis labels
-  ctx.fillStyle = 'rgba(85,96,112,0.9)';
-  ctx.font = `${11*devicePixelRatio/devicePixelRatio}px 'Share Tech Mono'`;
-  ctx.textAlign = 'right';
-  [minV, (minV+maxV)/2, maxV].forEach(v => {
-    ctx.fillText((v>=0?'+':'')+'$'+v.toFixed(1), 38, toY(v)+4);
-  });
+  ctx.fillStyle='rgba(85,96,112,0.9)';ctx.font='11px Share Tech Mono';ctx.textAlign='right';
+  [minV,(minV+maxV)/2,maxV].forEach(function(v){ctx.fillText((v>=0?'+':'')+'\$'+v.toFixed(1),38,toY(v)+4);});
 }
 
-// ── DRAW Z-SCORE ───────────────────────────────────────────────────────
+// ── DRAW ZSCORE ────────────────────────────────────────────────────────
 function drawZScore(zscores, entryZ, exitZ) {
-  const canvas = document.getElementById('chartSpread');
-  canvas.width  = canvas.offsetWidth * devicePixelRatio;
-  canvas.height = 160 * devicePixelRatio;
-  const ctx = canvas.getContext('2d');
-  ctx.scale(devicePixelRatio, devicePixelRatio);
-  const W = canvas.offsetWidth, H = 160;
-  ctx.clearRect(0,0,W,H);
-
-  const cap  = Math.max(entryZ + 1, 4);
-  const toY  = v => H/2 - (v/cap)*(H/2 - 16);
-  const toX  = i => (i/(zscores.length-1))*(W-40)+20;
-
-  const dashed = (y, color, dash=[4,4]) => {
-    ctx.strokeStyle = color; ctx.lineWidth=1; ctx.setLineDash(dash);
-    ctx.beginPath(); ctx.moveTo(20,y); ctx.lineTo(W-20,y); ctx.stroke();
-    ctx.setLineDash([]);
+  var canvas=document.getElementById('chartSpread');
+  canvas.width=canvas.offsetWidth*devicePixelRatio;
+  canvas.height=160*devicePixelRatio;
+  var ctx=canvas.getContext('2d');
+  ctx.scale(devicePixelRatio,devicePixelRatio);
+  var W=canvas.offsetWidth,H=160,cap=Math.max(entryZ+1,4);
+  var toY=function(v){return H/2-(v/cap)*(H/2-16);};
+  var toX=function(i){return(i/(zscores.length-1))*(W-40)+20;};
+  var dashed=function(y,color,dash){
+    ctx.strokeStyle=color;ctx.lineWidth=1;ctx.setLineDash(dash||[4,4]);
+    ctx.beginPath();ctx.moveTo(20,y);ctx.lineTo(W-20,y);ctx.stroke();ctx.setLineDash([]);
   };
-
-  dashed(toY(0),  'rgba(255,255,255,0.1)', []);
-  dashed(toY(entryZ),  'rgba(255,68,68,0.4)');
-  dashed(toY(-entryZ), 'rgba(255,68,68,0.4)');
-  dashed(toY(exitZ),   'rgba(0,230,118,0.3)');
-  dashed(toY(-exitZ),  'rgba(0,230,118,0.3)');
-
-  // Z-score line
-  ctx.strokeStyle = '#29b6f6';
-  ctx.lineWidth   = 1.2;
-  ctx.lineJoin    = 'round';
+  dashed(toY(0),'rgba(255,255,255,0.1)',[]);
+  dashed(toY(entryZ),'rgba(255,68,68,0.4)');
+  dashed(toY(-entryZ),'rgba(255,68,68,0.4)');
+  dashed(toY(exitZ),'rgba(0,230,118,0.3)');
+  dashed(toY(-exitZ),'rgba(0,230,118,0.3)');
+  ctx.strokeStyle='#29b6f6';ctx.lineWidth=1.2;ctx.lineJoin='round';
   ctx.beginPath();
-  zscores.forEach((v,i) => {
-    const clamped = Math.max(-cap, Math.min(cap, v));
-    i===0 ? ctx.moveTo(toX(i),toY(clamped)) : ctx.lineTo(toX(i),toY(clamped));
+  zscores.forEach(function(v,i){
+    var clamped=Math.max(-cap,Math.min(cap,v));
+    i===0?ctx.moveTo(toX(i),toY(clamped)):ctx.lineTo(toX(i),toY(clamped));
   });
   ctx.stroke();
-
-  // Labels
-  ctx.fillStyle = 'rgba(85,96,112,0.85)';
-  ctx.font = `10px 'Share Tech Mono'`;
-  ctx.textAlign = 'right';
-  ctx.fillText(`+${entryZ}σ`, 38, toY(entryZ)+4);
-  ctx.fillText(`-${entryZ}σ`, 38, toY(-entryZ)+4);
-  ctx.fillText('0', 38, toY(0)+4);
+  ctx.fillStyle='rgba(85,96,112,0.85)';ctx.font='10px Share Tech Mono';ctx.textAlign='right';
+  ctx.fillText('+'+entryZ+'\u03c3',38,toY(entryZ)+4);
+  ctx.fillText('-'+entryZ+'\u03c3',38,toY(-entryZ)+4);
+  ctx.fillText('0',38,toY(0)+4);
 }
 
 // ── STATUS ─────────────────────────────────────────────────────────────
-function setStatus(msg, cls='') {
-  const el = document.getElementById('status');
-  el.textContent = msg;
-  el.className = cls;
+function setStatus(msg,cls) {
+  var el=document.getElementById('status');
+  el.textContent=msg; el.className=cls||'';
 }
 
 // ── MAIN RUN ───────────────────────────────────────────────────────────
 async function run() {
-  const btn = document.getElementById('runBtn');
-  btn.disabled = true;
-
+  var btn=document.getElementById('runBtn');
+  btn.disabled=true;
+  hamsterReset();
   try {
-    let crude, natgas, timestamps;
-
-    if (currentMode === 'sim') {
-      setStatus('Generating simulation...', 'loading');
-      ({ crude, natgas, timestamps } = genSimData());
-      setStatus('Simulation complete — synthetic data', 'ok');
+    var crude,natgas,timestamps;
+    if(currentMode==='sim'){
+      setStatus('Generating simulation...','loading');
+      var d=genSimData(); crude=d.crude; natgas=d.natgas; timestamps=d.timestamps;
+      setStatus('Simulation complete — synthetic data','ok');
     } else {
-      const d = await fetchRealData(currentMode);
-      crude      = d.crude;
-      natgas     = d.natgas;
-      timestamps = d.timestamps;
-      setStatus(`Loaded ${d.count} bars from Yahoo Finance (${currentMode === 'live' ? 'live 1-min' : 'historical daily'})`, 'ok');
+      var d=await fetchRealData(currentMode);
+      crude=d.crude; natgas=d.natgas; timestamps=d.timestamps;
+      setStatus('Loaded '+d.count+' bars from Yahoo Finance ('+( currentMode==='live'?'live 1-min':'historical daily')+')','ok');
     }
-
-    const result = runStrategy(crude, natgas);
-    displayStats(result, crude.length, currentMode);
+    var result=runStrategy(crude,natgas);
+    displayStats(result,crude.length,currentMode);
     drawEquity(result.equity);
-    drawZScore(result.zscores, result.entryZ, result.exitZ);
-
-  } catch(err) {
-    setStatus('ERROR: ' + err.message + ' — Is the local server running? (python server.py)', 'error');
+    drawZScore(result.zscores,result.entryZ,result.exitZ);
+  } catch(err){
+    setStatus('ERROR: '+err.message,'error');
   }
-
-  btn.disabled = false;
+  btn.disabled=false;
 }
 
-// resize-safe redraws
-window.addEventListener('resize', () => {
-  const eq = document.getElementById('statsRow');
-  if (eq.style.display !== 'none') run();
-});
+// ── HAMSTER ────────────────────────────────────────────────────────────
+var _hc = document.getElementById('hamster-canvas');
+var _hx = _hc.getContext('2d');
+var _cc = document.getElementById('confetti-canvas');
+var _cx = _cc.getContext('2d');
+var _animId = null;
+var _particles = [];
+
+function _drawHamster(legPhase, mood) {
+  _hx.clearRect(0,0,90,130);
+  var Y=20;
+  _hx.fillStyle='#D4B07A'; _hx.beginPath(); _hx.ellipse(72,72+Y,6,4,0.3,0,Math.PI*2); _hx.fill();
+  _hx.fillStyle='#C49A5A'; _hx.beginPath(); _hx.ellipse(45,58+Y,34,30,0,0,Math.PI*2); _hx.fill();
+  _hx.fillStyle='#F5EDD8'; _hx.beginPath(); _hx.ellipse(32,62+Y,18,22,-0.3,0,Math.PI*2); _hx.fill();
+  _hx.fillStyle='#C49A5A'; _hx.beginPath(); _hx.ellipse(38,30+Y,24,22,-0.1,0,Math.PI*2); _hx.fill();
+  _hx.fillStyle='#D4B47A';
+  _hx.beginPath(); _hx.ellipse(20,36+Y,13,11,0.2,0,Math.PI*2); _hx.fill();
+  _hx.beginPath(); _hx.ellipse(55,34+Y,10,9,-0.2,0,Math.PI*2); _hx.fill();
+  _hx.fillStyle='#A07040';
+  _hx.beginPath(); _hx.ellipse(26,12+Y,8,7,-0.3,0,Math.PI*2); _hx.fill();
+  _hx.beginPath(); _hx.ellipse(48,10+Y,7,6,0.2,0,Math.PI*2); _hx.fill();
+  _hx.fillStyle='#FFAABB';
+  _hx.beginPath(); _hx.ellipse(26,12+Y,4,3.5,-0.3,0,Math.PI*2); _hx.fill();
+  _hx.beginPath(); _hx.ellipse(48,10+Y,3.5,3,0.2,0,Math.PI*2); _hx.fill();
+  _hx.fillStyle='#F5EDD8'; _hx.beginPath(); _hx.ellipse(28,35+Y,13,12,0.1,0,Math.PI*2); _hx.fill();
+  _hx.fillStyle='#1A1008'; _hx.beginPath(); _hx.ellipse(50,26+Y,5,5,0,0,Math.PI*2); _hx.fill();
+  _hx.fillStyle='#FFFFFF'; _hx.beginPath(); _hx.ellipse(52,24+Y,2,2,0,0,Math.PI*2); _hx.fill();
+  _hx.fillStyle='#E87D8A'; _hx.beginPath(); _hx.ellipse(25,38+Y,3.5,2.5,0,0,Math.PI*2); _hx.fill();
+  _hx.strokeStyle='rgba(180,160,130,0.8)'; _hx.lineWidth=0.8;
+  [[8,35,22,33],[6,38,22,38],[8,41,22,41]].forEach(function(w){ _hx.beginPath(); _hx.moveTo(w[0],w[1]+Y); _hx.lineTo(w[2],w[3]+Y); _hx.stroke(); });
+  _hx.lineCap='round';
+  if(mood==='happy'){
+    _hx.strokeStyle='#3B2507'; _hx.lineWidth=2.5;
+    _hx.beginPath(); _hx.moveTo(16,42+Y); _hx.quadraticCurveTo(24,52+Y,33,42+Y); _hx.stroke();
+    _hx.fillStyle='rgba(255,100,100,0.3)';
+    _hx.beginPath(); _hx.ellipse(15,39+Y,8,5,0,0,Math.PI*2); _hx.fill();
+    _hx.beginPath(); _hx.ellipse(56,33+Y,6,4,0,0,Math.PI*2); _hx.fill();
+  } else if(mood==='sad'){
+    _hx.strokeStyle='#3B2507'; _hx.lineWidth=2.5;
+    _hx.beginPath(); _hx.moveTo(45,18+Y); _hx.quadraticCurveTo(50,15+Y,56,19+Y); _hx.stroke();
+    _hx.beginPath(); _hx.moveTo(16,47+Y); _hx.quadraticCurveTo(24,40+Y,33,47+Y); _hx.stroke();
+    _hx.fillStyle='#5BB8F5';
+    _hx.beginPath(); _hx.moveTo(50,34+Y); _hx.bezierCurveTo(44,40+Y,44,46+Y,50,46+Y); _hx.bezierCurveTo(56,46+Y,56,40+Y,50,34+Y); _hx.fill();
+    _hx.fillStyle='rgba(255,255,255,0.5)'; _hx.beginPath(); _hx.ellipse(48,38+Y,1.5,2.5,-0.3,0,Math.PI*2); _hx.fill();
+  }
+  _hx.strokeStyle='rgba(59,37,7,0.2)'; _hx.lineWidth=1.2;
+  _hx.beginPath(); _hx.ellipse(45,58+Y,34,30,0,0,Math.PI*2); _hx.stroke();
+  _hx.beginPath(); _hx.ellipse(38,30+Y,24,22,-0.1,0,Math.PI*2); _hx.stroke();
+  var lOff=Math.sin(legPhase)*5, rOff=Math.sin(legPhase+Math.PI)*5;
+  _hx.fillStyle='#C49A5A';
+  _hx.beginPath(); _hx.ellipse(28,88+Y+lOff,8,6,0.1,0,Math.PI*2); _hx.fill();
+  _hx.beginPath(); _hx.ellipse(52,88+Y+rOff,8,6,-0.1,0,Math.PI*2); _hx.fill();
+  _hx.fillStyle='#F5EDD8';
+  _hx.beginPath(); _hx.ellipse(28,92+Y+lOff,6,4,0.1,0,Math.PI*2); _hx.fill();
+  _hx.beginPath(); _hx.ellipse(52,92+Y+rOff,6,4,-0.1,0,Math.PI*2); _hx.fill();
+  var pawY=(mood==='happy'?62+Math.sin(legPhase)*3:68)+Y;
+  _hx.fillStyle='#C49A5A';
+  _hx.beginPath(); _hx.ellipse(18,pawY,7,5,0.3,0,Math.PI*2); _hx.fill();
+  _hx.beginPath(); _hx.ellipse(32,pawY+2,7,5,-0.1,0,Math.PI*2); _hx.fill();
+  _hx.fillStyle='#F5EDD8';
+  _hx.beginPath(); _hx.ellipse(18,pawY+2,5,3,0.3,0,Math.PI*2); _hx.fill();
+  _hx.beginPath(); _hx.ellipse(32,pawY+4,5,3,-0.1,0,Math.PI*2); _hx.fill();
+}
+
+function _spawnConf(){
+  var cols=['#FFD700','#00e676','#ff69b4','#87CEEB','#ff6b6b','#ffd54f','#ce93d8'];
+  for(var i=0;i<22;i++) _particles.push({x:Math.random()*_cc.width,y:-6,vx:(Math.random()-.5)*3,vy:1.5+Math.random()*2,c:cols[Math.floor(Math.random()*cols.length)],sz:3+Math.random()*5,life:1,rot:Math.random()*Math.PI*2});
+}
+function _drawConf(){
+  _cx.clearRect(0,0,_cc.width,_cc.height);
+  _particles=_particles.filter(function(p){return p.life>0;});
+  _particles.forEach(function(p){
+    _cx.globalAlpha=p.life; _cx.fillStyle=p.c;
+    _cx.save(); _cx.translate(p.x+p.sz/2,p.y+p.sz/2); _cx.rotate(p.rot);
+    _cx.fillRect(-p.sz/2,-p.sz/2,p.sz,p.sz); _cx.restore();
+    p.x+=p.vx; p.y+=p.vy; p.life-=0.01; p.rot+=0.07;
+  });
+  _cx.globalAlpha=1;
+}
+function _runAnim(mood){
+  hamsterReset();
+  var W=window.innerWidth, speed=mood==='happy'?3.5:2.0, x=-100, phase=0, tk=0;
+  function go(){
+    tk++; x+=speed; phase+=0.28;
+    if(x>W+20) x=-100;
+    if(mood==='happy'&&tk%16===0) _spawnConf();
+    _drawHamster(phase,mood);
+    _hc.style.left=x+'px';
+    _drawConf();
+    _animId=requestAnimationFrame(go);
+  }
+  go();
+}
+function hamsterProfit(){ _runAnim('happy'); }
+function hamsterLoss(){   _runAnim('sad');   }
+function hamsterReset(){
+  if(_animId){ cancelAnimationFrame(_animId); _animId=null; }
+  _particles=[];
+  _cx.clearRect(0,0,_cc.width,_cc.height);
+  _hc.style.left='-100px';
+  _hx.clearRect(0,0,90,110);
+}
 </script>
 </body>
 </html>
